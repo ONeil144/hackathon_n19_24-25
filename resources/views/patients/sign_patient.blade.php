@@ -24,7 +24,7 @@
                 <input class="w3-input w3-border w3-round required" type="email" name="email" required>
 
                 <label class="w3-text-indigo"><b>Téléphone</b></label>
-                <input class="w3-input w3-border w3-round required" type="text" name="phone" required>
+                <input class="w3-input w3-border w3-round required" type="phone" name="phone" required>
 
                 <label class="w3-text-indigo"><b>Adresse</b></label>
                 <input class="w3-input w3-border w3-round required" type="text" name="adresse" required>
@@ -78,7 +78,14 @@
                 </select>
 
                 <label class="w3-text-indigo"><b>Stade MRC</b></label>
-                <input class="w3-input w3-border w3-round required" type="text" name="stade_mrc" required>
+                <select class="w3-select w3-border required" name="stade_mrc">
+                    <option value="" disabled selected>Choisir(NB: TFG = Taux de Filtration Glomérulaire en ml/min)</option>
+                    <option value="Stade 1">Stade 1 : Maladie rénale chronique légère (TFG ≥ 90)</option>
+                    <option value="Stade 2">Stade 2 : Maladie rénale chronique modérément légère (TFG 60-89)</option>
+                    <option value="Stade 3">Stade 3 : Maladie rénale chronique modérée (TFG 30-59)</option>
+                    <option value="Stade 4">Stade 4 : Maladie rénale chronique sévère (TFG 15-29)</option>
+                    <option value="Stade 5">Stade 5 : Insuffisance rénale terminale (TFG < 15)</option>
+                </select>
 
                 <button type="button" class="w3-button w3-grey w3-margin-top w3-round" onclick="prevStep()">Retour</button>
                 <button type="submit" class="w3-button w3-green w3-margin-top w3-round">Enregistrer</button>
