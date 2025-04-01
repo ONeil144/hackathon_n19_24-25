@@ -26,7 +26,7 @@
     <div class="w3-dropdown-content w3-bar-block w3-border" id="dropdown2">
       <a href="#" class="w3-bar-item w3-button" onclick="openModal('consulte')">Enregistrer une  consultations</a>
       <a href="{{ route('consultation.liste') }}" class="w3-bar-item w3-button">Liste Consultation</a>
-      
+
     </div>
   </div>
     <a href="#" class="w3-bar-item w3-button  w3-border-bottom">NOTIFICATION</a>
@@ -59,9 +59,9 @@
     <!-- Contenu principal -->
     <div class="w3-container w3-padding" id="main">
        <div class="w3-indigo w3-container">
-            <button id="openNav" class="w3-button  w3-xlarge" onclick="w3_open()">&#9776;</button>
+            <button id="openNav" class="w3-button w3-xlarge" onclick="w3_open()">&#9776;</button>
             <div class="w3-container w3-right">
-                <span class="w3-tag w3-spin fa fa-plus w3-jumbo w3-red"></span>
+                <span class="w3-tag fa fa-plus w3-jumbo w3-red"></span>
                 <span class="w3-tag  ">A</span>
                 <span class="w3-tag w3-white">I</span>
                 <span class="w3-tag  w3-yellow">4</span>
@@ -92,33 +92,33 @@
             <p>
             <label>Code personnel du patient</label></p>
             <input class="w3-input" type="text" >
-            <p>   
-            <label>Allergies</label>  
+            <p>
+            <label>Allergies</label>
             <input class="w3-input" type="text">
             </p>
-            <p>   
-            <label>Antecedents Médicaux</label>  
+            <p>
+            <label>Antecedents Médicaux</label>
             <input class="w3-input" type="text">
             </p>
-            <p>  
-            <label>Raison consultation</label>   
+            <p>
+            <label>Raison consultation</label>
             <input class="w3-input" type="text">
             </p>
-            <p>    
-            <label>Diagnostic</label> 
+            <p>
+            <label>Diagnostic</label>
             <input class="w3-input" type="text">
             </p>
-            <p>   
-            <label>Observation</label>  
+            <p>
+            <label>Observation</label>
             <input class="w3-input" type="text">
             </p>
-            <p>    
-            <label>Status</label> 
+            <p>
+            <label>Status</label>
             <input class="w3-input" type="text">
             </p>
 
             <button class="w3-btn w3-blue-grey">Registrer</button>
-        
+
             </form>
       </div>
     </div>
@@ -180,11 +180,11 @@ function carousel() {
   var i;
   var x = document.getElementsByClassName("mySlides");
   for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
+    x[i].style.display = "none";
   }
   myIndex++;
-  if (myIndex > x.length) {myIndex = 1}    
-  x[myIndex-1].style.display = "block";  
+  if (myIndex > x.length) {myIndex = 1}
+  x[myIndex-1].style.display = "block";
   setTimeout(carousel, 5000); // Change image every 5 seconds
 }
 
