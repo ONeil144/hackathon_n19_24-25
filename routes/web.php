@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/users/{user}', [DashboardController::class, 'destroy'])->name('users.destroy');
     Route::resource('workflows', WorkflowController::class);
     Route::resource('dossiers_medicaux', DossierMedicalController::class);
     Route::resource('patients', PatientController::class);
