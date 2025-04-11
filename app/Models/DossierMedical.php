@@ -33,5 +33,15 @@ class DossierMedical extends Model
     {
         return $this->belongsTo(PersonnelMedical::class, 'personnel_medical_id');
     }
+
+    /**
+     * Get all of the examens for the DossierMedical
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function examens()
+    {
+        return $this->hasMany(Examen::class, 'dossier_medical_id');
+    }
 }
 

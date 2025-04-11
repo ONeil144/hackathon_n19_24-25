@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -17,11 +18,17 @@ return new class extends Migration {
 
     public function down(): void
     {
+        // Update avatar to 'default_avatar' where it's null
+        DB::table('users')
+            ->whereNull('avatar')
+            ->update(['avatar' => 'default_avatar']);
+
         Schema::table('users', function (Blueprint $table) {
-            $table->string('prenom')->nullable(false)->change();
-            $table->string('role')->nullable(false)->change();
-            $table->string('avatar')->nullable(false)->change();
-            $table->string('code_personnel')->nullable(false)->change();
-        });
+                $table->string('prenom')->nullable(false)->change();
+                $table->string('role')->nullable(false)->change();
+                $table->string('avatar')->nullable(false)->change();
+                $table->string('code_personnel')->nullable(false)->change();
+            }
+        );
     }
 };
