@@ -9,27 +9,40 @@
 </head>
 <body>
     <div class="w3-container w3-padding w3-indigo">
-        <h2>Gestion des Utilisateurs du Personnel Médical</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Gestion des Utilisateurs du Personnel Médical</h2>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="w3-button w3-indigo" style="border: none; background: none; color: white; padding: 0;">Déconnexion</button>
+            </form>
+        </div>
+        
         <button class="w3-button w3-green" onclick="document.getElementById('addUserModal').style.display='block'">+ Ajouter Utilisateur</button>
     </div>
     
     <div class="w3-container w3-margin-top">
         <table class="w3-table w3-striped w3-bordered">
-            <tr class="w3-light-grey">
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Rôle</th>
-                <th>Actions</th>
-            </tr>
-            <tr>
-                <td>Dr. Dupont</td>
-                <td>dupont@example.com</td>
-                <td>Médecin</td>
-                <td>
-                    <button class="w3-button w3-blue" onclick="editUser()">Modifier</button>
-                    <button class="w3-button w3-red" onclick="deleteUser()">Supprimer</button>
-                </td>
-            </tr>
+        <tr class="w3-light-grey">
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+        </tr>
+        @foreach ($users as $user)
+        <tr>
+            <td>{{ $user->name }} {{ $user->prenom }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->role }}</td>
+            <td>
+                <a href="{{ route('profile.edit', ['user' => $user->id]) }}" class="w3-button w3-blue">Modifier</a>
+                <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="w3-button w3-red" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
         </table>
     </div>
     
