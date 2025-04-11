@@ -1056,6 +1056,7 @@
         },
         {
             "name": "laravel/framework",
+
             "version": "v12.8.1",
             "source": {
                 "type": "git",
@@ -1066,6 +1067,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/d1ea3566f6e0cad34834c6d18db0bf995438eb87",
                 "reference": "d1ea3566f6e0cad34834c6d18db0bf995438eb87",
+
                 "shasum": ""
             },
             "require": {
@@ -1267,7 +1269,9 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
+
             "time": "2025-04-08T19:58:59+00:00"
+
         },
         {
             "name": "laravel/prompts",
