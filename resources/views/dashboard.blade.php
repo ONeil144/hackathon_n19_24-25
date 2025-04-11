@@ -11,20 +11,77 @@
             <h2>Gestion des Utilisateurs du Personnel Médical</h2>
             <button class="w3-button w3-green" onclick="document.getElementById('addUserModal').style.display='block'">+ Ajouter Utilisateur</button>
         </div>
+         <div class="w3-container w3-padding w3-margin-top">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="w3-button w3-red">
+                    Se déconnecter
+                </button>
+            </form>
+        </div>
         
         <div class="w3-container w3-margin-top">
             <table class="w3-table w3-striped w3-bordered">
                 @foreach ($personnels as $personnel)
-                <tr>
-                    <td>{{ $personnel->name }} {{ $personnel->prenom }}</td>
-                    <td>{{ $personnel->email }}</td>
-                    <td>{{ $personnel->personnelMedical->specialite ?? 'Non spécifié' }}</td>
-                    <td>
-                        <button class="w3-button w3-blue">Modifier</button>
-                        <button class="w3-button w3-red">Supprimer</button>
-                    </td>
-                </tr>
-                @endforeach
+<tr>
+    <td>{{ $personnel->name }} {{ $personnel->prenom }}</td>
+    <td>{{ $personnel->email }}</td>
+    <td>{{ $personnel->personnelMedical->specialite ?? 'Non spécifié' }}</td>
+    <td>
+        <button class="w3-button w3-blue" onclick="document.getElementById('editUserModal{{ $personnel->id }}').style.display='block'">Modifier</button>
+       
+    </td>
+    <td>
+    <form method="POST" action="{{ route('dashboard.deleteUser', $personnel->id) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+    @csrf
+    @method('DELETE')
+    <button class="w3-button w3-red" type="submit">Supprimer</button>
+</form>
+
+    </td>
+</tr>
+
+<!-- Modal de modification -->
+<div id="editUserModal{{ $personnel->id }}" class="w3-modal">
+    <div class="w3-modal-content w3-padding-large w3-card-4">
+        <header class="w3-container w3-blue">
+            <span onclick="document.getElementById('editUserModal{{ $personnel->id }}').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+            <h2>Modifier Utilisateur</h2>
+        </header>
+        <div class="w3-container">
+            <form method="POST" action="{{ route('dashboard.updateUser', $personnel->id) }}">
+                @csrf
+                @method('PUT')
+
+                <p>
+                    <label>Nom</label>
+                    <input class="w3-input" type="text" name="name" value="{{ $personnel->name }}" required>
+                </p>
+                <p>
+                    <label>Prénom</label>
+                    <input class="w3-input" type="text" name="prenom" value="{{ $personnel->prenom }}" required>
+                </p>
+                <p>
+                    <label>Email</label>
+                    <input class="w3-input" type="email" name="email" value="{{ $personnel->email }}" required>
+                </p>
+                <p>
+                    <label>Spécialité</label>
+                    <select class="w3-select" name="specialite">
+                        <option value="">-- Choisir --</option>
+                        <option value="Médecin" {{ optional($personnel->personnelMedical)->specialite === 'Médecin' ? 'selected' : '' }}>Médecin</option>
+                        <option value="Infirmier" {{ optional($personnel->personnelMedical)->specialite === 'Infirmier' ? 'selected' : '' }}>Infirmier</option>
+                        <option value="Chirurgien" {{ optional($personnel->personnelMedical)->specialite === 'Chirurgien' ? 'selected' : '' }}>Chirurgien</option>
+                        <option value="Anesthésiste" {{ optional($personnel->personnelMedical)->specialite === 'Anesthésiste' ? 'selected' : '' }}>Anesthésiste</option>
+                    </select>
+                </p>
+                <button class="w3-button w3-blue" type="submit">Mettre à jour</button>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
+
             </table>
         </div>
         

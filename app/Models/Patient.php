@@ -45,4 +45,14 @@ class Patient extends Model
     {
         return $this->hasMany(Traitement::class, 'patients_id');
     }
+
+    /**
+     * Get all of the examens for the Patient
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function examens()
+    {
+        return $this->hasMany(Examen::class, 'patients_id');
+    }
 }

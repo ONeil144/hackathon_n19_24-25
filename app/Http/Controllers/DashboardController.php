@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
-use App\Models\PersonnelMedical;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -10,38 +9,66 @@ use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
-    /**
-    * Afficher la liste des personnels médicaux.
-    */
     public function index()
     {
-        // Authorization check (if not already handled by middleware)
-        if (Auth::user()->role !== 'administrateur') {
-            abort(403, 'Unauthorized action.');
-        }
+        $personnels = User::where('role', 'personnel_medical')
+                          ->with('personnelMedical')
+                          ->get();
         
-        $users = User::all();
-
-        return view('admin', compact('users'));
+        return view('dashboard', compact('personnels'));
     }
 
-    public function destroy(User $user)
-    {
-        // Authorization check (ensure admin, and possibly prevent deleting self)
-        if (Auth::user()->role !== 'administrateur') {
-            abort(403, 'Unauthorized action.');
-        }
-        if ($user->id === Auth::id()) {
-             return redirect()->back()->with('error', 'Vous ne pouvez pas supprimer votre propre compte.');
-        }
+    public function updateUser(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string',
+        'prenom' => 'required|string',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'specialite' => 'nullable|string'
+    ]);
 
-        try {
-           
-            $user->delete();
-            return redirect()->route('dashboard')->with('success', 'Utilisateur supprimé avec succès.'); // Redirect to the admin panel route
-        } catch (\Exception $e) {
-            Log::error('Erreur lors de la suppression de l\'utilisateur : ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Erreur lors de la suppression de l\'utilisateur.');
+    $user = User::findOrFail($id);
+    $user->update([
+        'name' => $request->name,
+        'prenom' => $request->prenom,
+        'email' => $request->email,
+    ]);
+
+    if ($user->role === 'personnel_medical') {
+        // Vérifie si la relation existe déjà
+        if ($user->personnelMedical) {
+            $user->personnelMedical->update([
+                'specialite' => $request->specialite
+            ]);
+        } else {
+            PersonnelMedical::create([
+                'user_id' => $user->id,
+                'specialite' => $request->specialite
+            ]);
         }
     }
+
+    return redirect()->route('dashboard')->with('success', 'Utilisateur mis à jour avec succès');
+}
+
+// supprimer un utilisateur
+
+public function deleteUser($id)
+{
+    // Trouver l'utilisateur par son ID
+    $personnel = User::find($id);
+
+    if ($personnel) {
+        // Supprimer l'utilisateur
+        $personnel->delete();
+
+        // Rediriger avec un message de succès
+        return redirect()->route('dashboard')->with('success', 'Utilisateur supprimé avec succès.');
+    }
+
+    // Si l'utilisateur n'est pas trouvé, rediriger avec un message d'erreur
+    return redirect()->route('dashboard')->with('error', 'Utilisateur non trouvé.');
+}
+
+
 }

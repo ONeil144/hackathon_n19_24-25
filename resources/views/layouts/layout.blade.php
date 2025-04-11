@@ -42,8 +42,8 @@
     <div class="w3-dropdown-click">
     <button class="w3-button  w3-border-bottom" onclick="toggleDropdown('dropdown5')">Examens <i class="fa fa-caret-down"></i></button>
         <div class="w3-dropdown-content w3-bar-block w3-border" id="dropdown5">
-        <a href="#" class="w3-bar-item w3-button">Registrer un examen</a>
-        <a href="#" class="w3-bar-item w3-button">Liste des examens</a>
+        <a href="{{ route('examens.create') }}" class="w3-bar-item w3-button">Registrer un examen</a>
+        <a href="{{ route('examens.index') }}" class="w3-bar-item w3-button">Liste des examens</a>
         </div>
     </div>
 </div>
